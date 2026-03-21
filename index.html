@@ -456,7 +456,194 @@
         padding: 22px;
       }
     }
+
+    .gallery-section {
+  padding: 40px 0 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.gallery-card {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.05);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.28);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 5, 14, 0.88);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.gallery-modal-content {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-modal-content img {
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+}
+
+.gallery-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.14);
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.gallery-prev {
+  left: 24px;
+}
+
+.gallery-next {
+  right: 24px;
+}
+
+.policy-section {
+  padding: 40px 0 20px;
+}
+
+.policy-card {
+  background:
+    radial-gradient(circle at top, rgba(170, 0, 40, 0.18), transparent 35%),
+    linear-gradient(180deg, rgba(40, 0, 12, 0.92), rgba(20, 0, 8, 0.96));
+  border: 1px solid rgba(255, 80, 120, 0.35);
+  border-radius: 30px;
+  padding: 32px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+
+.policy-card h2 {
+  margin: 0 0 18px;
+  font-size: 1.8rem;
+  color: #ffe5ea;
+}
+
+.policy-card p {
+  margin: 0 0 18px;
+  color: #f0d7dd;
+  line-height: 1.8;
+}
+
+.policy-icon {
+  margin-right: 10px;
+}
+
+@media (max-width: 980px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .policy-card {
+    padding: 24px;
+  }
+
+  .gallery-nav {
+    width: 46px;
+    height: 46px;
+  }
+}
   </style>
+
+  <script>
+  const galleryImages = [
+    "image/SummerBlues.png",
+    "image/PintrestToRoblox.png",
+    "image/DarkLace.png",
+    "image/SalmonSummer.png"
+  ];
+
+  let currentSlide = 0;
+
+  function openGallery(index = 0) {
+    currentSlide = index;
+    document.getElementById("galleryModal").style.display = "flex";
+    document.getElementById("galleryImage").src = galleryImages[currentSlide];
+  }
+
+  function closeGallery() {
+    document.getElementById("galleryModal").style.display = "none";
+  }
+
+  function changeSlide(direction) {
+    currentSlide += direction;
+
+    if (currentSlide < 0) {
+      currentSlide = galleryImages.length - 1;
+    }
+
+    if (currentSlide >= galleryImages.length) {
+      currentSlide = 0;
+    }
+
+    document.getElementById("galleryImage").src = galleryImages[currentSlide];
+  }
+
+  window.addEventListener("click", function (e) {
+    const modal = document.getElementById("galleryModal");
+    if (e.target === modal) {
+      closeGallery();
+    }
+  });
+</script>
 </head>
 <body>
 <header class="topbar">
@@ -539,7 +726,7 @@
               <p>Soft pastel look with a dreamy, feminine vibe made for beach edits and cute avatar videos.</p>
               <div class="price-row">
                 <span class="price">From 800 R$</span>
-                <a class="btn btn-secondary" href="#">View item</a>
+                <a class="btn btn-primary" href="#drops-gallery">New Drops</a>
               </div>
             </div>
           </article>
@@ -573,6 +760,36 @@
               </div>
             </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="drops-gallery" class="gallery-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>New Drops Collection</h2>
+            <p>Browse the latest Roblox fashion drops, outfit reveals, and featured looks from Alexa’s Creative Group.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openGallery()">View All</button>
+        </div>
+    
+        <div class="gallery-grid">
+          <div class="gallery-card" onclick="openGallery(0)">
+            <img src="image/SummerBlues.png" alt="Summer Blues collection image">
+          </div>
+    
+          <div class="gallery-card" onclick="openGallery(1)">
+            <img src="image/PintrestToRoblox.png" alt="Pinterest to Roblox collection image">
+          </div>
+    
+          <div class="gallery-card" onclick="openGallery(2)">
+            <img src="image/DarkLace.png" alt="Dark Lace collection image">
+          </div>
+    
+          <div class="gallery-card" onclick="openGallery(3)">
+            <img src="image/SalmonSummer.png" alt="Salmon Summer collection image">
+          </div>
         </div>
       </div>
     </section>
@@ -702,10 +919,46 @@
     </div>
   </main>
 
+  <section id="policy" class="policy-section">
+  <div class="container">
+    <div class="policy-card">
+      <h2><span class="policy-icon">🚫</span> No Reselling Policy</h2>
+
+      <p>
+        All products, services, and digital content provided on this website are intended for personal use only.
+        By purchasing or accessing any materials from this site, you agree not to reproduce, duplicate, copy,
+        sell, trade, resell, or exploit any portion of the content without explicit written permission.
+      </p>
+
+      <p>
+        Unauthorized resale, redistribution, or repackaging of our products — whether in original or modified form —
+        is strictly prohibited. This includes selling our content on third-party platforms, sharing access with others,
+        or using our materials for commercial gain.
+      </p>
+
+      <p>
+        We reserve the right to take action against individuals or entities found violating this policy, including
+        suspension of access, termination of accounts, and pursuit of damages where applicable.
+      </p>
+    </div>
+  </div>
+</section>
+  
   <footer class="footer">
     <div class="container">
       © 2026 Alexa's Creative Group — Roblox fashion showcase template.
     </div>
   </footer>
+
+  <div id="galleryModal" class="gallery-modal">
+  <span class="gallery-close" onclick="closeGallery()">&times;</span>
+
+  <button class="gallery-nav gallery-prev" onclick="changeSlide(-1)">❮</button>
+  <button class="gallery-nav gallery-next" onclick="changeSlide(1)">❯</button>
+
+  <div class="gallery-modal-content">
+    <img id="galleryImage" src="" alt="Gallery image">
+  </div>
+</div>
 </body>
 </html>
