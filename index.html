@@ -58,20 +58,42 @@
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-    }
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
 
-    .brand-badge {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
-      box-shadow: 0 8px 24px rgba(157, 123, 255, 0.3);
-    }
+.brand-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  flex: 0 0 auto;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.brand-subtitle {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
 
     .nav-links {
       display: flex;
@@ -442,28 +464,33 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-badge"></div>
-        <div>
-          <div>Alexa's Creative Group</div>
-        </div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="#drops">Drops</a>
-        <a href="#about">About</a>
-        <a href="#commissions">Commissions</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="cta-row">
-        <a class="btn btn-secondary" href="#drops">View Looks</a>
-        <a class="btn btn-primary" href="#contact">Shop / Contact</a>
+<header class="topbar">
+  <div class="container nav">
+    <div class="brand">
+      <img
+        class="brand-logo"
+        src="https://raw.githubusercontent.com/AlexandraMartinezJoya/AlexasCreativeGroup/refs/heads/main/image/4384b08b-6404-43d4-b918-bc3641764548.jfif"
+        alt="Alexa's Creative Group logo"
+      />
+      <div class="brand-text">
+        <div class="brand-title">Alexa's Creative Group</div>
+        <div class="brand-subtitle">Roblox Fashion Studio</div>
       </div>
     </div>
-  </header>
+
+    <nav class="nav-links">
+      <a href="#drops">Drops</a>
+      <a href="#about">About</a>
+      <a href="#commissions">Commissions</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="cta-row">
+      <a class="btn btn-secondary" href="#drops">View Looks</a>
+      <a class="btn btn-primary" href="#contact">Shop / Contact</a>
+    </div>
+  </div>
+</header>
 
   <main>
     <section class="hero">
