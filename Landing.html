@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alexa's Creative Group</title>
+  <style>
+    :root {
+      --bg: #0f0b1a;
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-strong: rgba(255, 255, 255, 0.14);
+      --text: #f8f4ff;
+      --muted: #d6c9ef;
+      --pink: #ff7ccf;
+      --purple: #9d7bff;
+      --cyan: #6fe7ff;
+      --line: rgba(255, 255, 255, 0.14);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(157, 123, 255, 0.22), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(255, 124, 207, 0.18), transparent 25%),
+        linear-gradient(180deg, #161028 0%, #0f0b1a 100%);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(10, 7, 18, 0.65);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+      box-shadow: 0 8px 24px rgba(157, 123, 255, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      box-shadow: 0 10px 24px rgba(157, 123, 255, 0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero {
+      padding: 84px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.4rem, 6vw, 4.7rem);
+      line-height: 0.96;
+      letter-spacing: -1.8px;
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 0 24px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05));
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30% -30% auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(111, 231, 255, 0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .avatar-stage {
+      height: 100%;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 35%),
+        linear-gradient(180deg, rgba(150, 120, 255, 0.3), rgba(15, 11, 26, 0.2)),
+        #181226;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .avatar-placeholder {
+      width: min(280px, 100%);
+      aspect-ratio: 3 / 4;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      padding: 18px;
+      font-weight: 600;
+    }
+
+    .floating-tag {
+      position: absolute;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(13, 10, 23, 0.7);
+      border: 1px solid var(--line);
+      color: white;
+      font-size: 0.92rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .tag-1 { top: 22px; left: 18px; }
+    .tag-2 { bottom: 22px; right: 18px; }
+
+    section {
+      padding: 32px 0 12px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 650px;
+      line-height: 1.65;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .drops-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .card-media {
+      aspect-ratio: 4 / 5;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(255,124,207,0.25), rgba(111,231,255,0.2), rgba(157,123,255,0.28));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.08);
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.16rem;
+    }
+
+    .card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .price {
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .about-card,
+    .contact-card,
+    .stats-card {
+      padding: 24px;
+    }
+
+    .about-list,
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .about-item,
+    .contact-item,
+    .stat-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--cyan));
+      flex: 0 0 auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .stat-item {
+      flex-direction: column;
+      gap: 6px;
+      min-height: 120px;
+    }
+
+    .stat-number {
+      font-size: 1.9rem;
+      font-weight: 900;
+    }
+
+    .cta-banner {
+      margin: 30px 0 40px;
+      padding: 28px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255,124,207,0.18), rgba(157,123,255,0.18), rgba(111,231,255,0.14));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer {
+      padding: 20px 0 48px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .split,
+      .drops-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links,
+      .cta-row {
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .cta-banner {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <div>Alexa's Creative Group</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#drops">Drops</a>
+        <a href="#about">About</a>
+        <a href="#commissions">Commissions</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="cta-row">
+        <a class="btn btn-secondary" href="#drops">View Looks</a>
+        <a class="btn btn-primary" href="#contact">Shop / Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">✦ Roblox fashion • outfit drops • commissions</div>
+          <h1>Coquette, dreamy, and original Roblox fashion.</h1>
+          <p>
+            Build your brand hub with a clean fashion-style layout for outfit showcases, UGC-inspired looks,
+            commissions, TikTok traffic, and group links. Replace the placeholders with your own avatars,
+            thumbnails, shop links, and social buttons.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#drops">Browse latest drops</a>
+            <a class="btn btn-secondary" href="#commissions">See commissions</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="avatar-stage">
+            <div class="floating-tag tag-1">New summer drop</div>
+            <div class="avatar-placeholder">
+              Replace this with your featured Roblox avatar image or edit showcase.
+            </div>
+            <div class="floating-tag tag-2">Pinterest → Roblox</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="drops">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Latest outfit drops</h2>
+            <p>Use these cards for your newest pieces, bundles, seasonal collections, or top-performing videos.</p>
+          </div>
+        </div>
+
+        <div class="grid drops-grid">
+          <article class="card">
+            <div class="card-media">Add summer outfit image</div>
+            <div class="card-body">
+              <div class="tag">Summer drop</div>
+              <h3>Pink Blossom Set</h3>
+              <p>Soft pastel look with a dreamy, feminine vibe made for beach edits and cute avatar videos.</p>
+              <div class="price-row">
+                <span class="price">From 65 R$</span>
+                <a class="btn btn-secondary" href="#">View item</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">Add Pinterest to Roblox image</div>
+            <div class="card-body">
+              <div class="tag">Trend recreation</div>
+              <h3>Pinterest to Roblox</h3>
+              <p>Show how you turned inspo into a Roblox-ready outfit. Great for Shorts, TikTok, and commissions.</p>
+              <div class="price-row">
+                <span class="price">Featured</span>
+                <a class="btn btn-secondary" href="#">See reveal</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">Add goth / alt outfit image</div>
+            <div class="card-body">
+              <div class="tag">Alt fashion</div>
+              <h3>Dark Lace Collection</h3>
+              <p>Perfect for gothic, dramatic, and layered looks with lace details, ribbons, and statement pieces.</p>
+              <div class="price-row">
+                <span class="price">From 80 R$</span>
+                <a class="btn btn-secondary" href="#">Open collection</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container split">
+        <div class="card about-card">
+          <div class="section-head">
+            <div>
+              <h2>About the brand</h2>
+              <p>Tell visitors what your style is and what makes your Roblox fashion unique.</p>
+            </div>
+          </div>
+          <div class="about-list">
+            <div class="about-item"><span class="dot"></span><div>Original Roblox clothing and styled avatar concepts.</div></div>
+            <div class="about-item"><span class="dot"></span><div>Fashion inspired by Pinterest, coquette aesthetics, summer looks, and alternative styles.</div></div>
+            <div class="about-item"><span class="dot"></span><div>Perfect for creators who want one polished place to show their drops and take commissions.</div></div>
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="section-head">
+            <div>
+              <h2>Quick stats</h2>
+              <p>Replace these numbers with your own Roblox group stats, views, sales, or commission count.</p>
+            </div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number">120+</div>
+              <div>Designs uploaded</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">8.4K</div>
+              <div>Short-form views</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">24</div>
+              <div>Custom commissions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="commissions">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Commission options</h2>
+            <p>Keep this section simple so buyers instantly understand what they can request.</p>
+          </div>
+        </div>
+
+        <div class="grid drops-grid">
+          <article class="card">
+            <div class="card-body">
+              <div class="tag">Option 1</div>
+              <h3>Single clothing item</h3>
+              <p>One custom top, skirt, corset, or themed piece inspired by your references and color palette.</p>
+              <div class="price-row">
+                <span class="price">Starts at $10</span>
+                <a class="btn btn-secondary" href="#contact">Inquire</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <div class="tag">Option 2</div>
+              <h3>Full look set</h3>
+              <p>Coordinated outfit set for themed drops, roleplay groups, styled edits, or lookbook videos.</p>
+              <div class="price-row">
+                <span class="price">Starts at $25</span>
+                <a class="btn btn-secondary" href="#contact">Inquire</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <div class="tag">Option 3</div>
+              <h3>Content bundle</h3>
+              <p>Outfit design plus video thumbnail or first-frame visual for TikTok, Shorts, or promo posts.</p>
+              <div class="price-row">
+                <span class="price">Starts at $35</span>
+                <a class="btn btn-secondary" href="#contact">Inquire</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container split">
+        <div class="card contact-card">
+          <div class="section-head">
+            <div>
+              <h2>Contact / Shop links</h2>
+              <p>Swap these placeholders with your real links.</p>
+            </div>
+          </div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="dot"></span><div><strong>Roblox Group:</strong> alexascreativegroup</div></div>
+            <div class="contact-item"><span class="dot"></span><div><strong>TikTok:</strong> @yourhandle</div></div>
+            <div class="contact-item"><span class="dot"></span><div><strong>Discord:</strong> YourDiscord#0000</div></div>
+            <div class="contact-item"><span class="dot"></span><div><strong>Email:</strong> hello@example.com</div></div>
+          </div>
+        </div>
+
+        <div class="card contact-card">
+          <div class="section-head">
+            <div>
+              <h2>Mini FAQ</h2>
+              <p>A quick FAQ reduces repeat questions from buyers.</p>
+            </div>
+          </div>
+          <div class="about-list">
+            <div class="about-item"><span class="dot"></span><div><strong>Turnaround:</strong> 2–7 days depending on complexity.</div></div>
+            <div class="about-item"><span class="dot"></span><div><strong>Style:</strong> Coquette, summer, alt, feminine, cute, and Pinterest-inspired looks.</div></div>
+            <div class="about-item"><span class="dot"></span><div><strong>Best way to order:</strong> Send references, colors, vibe, and deadline.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="cta-banner">
+        <div>
+          <h2 style="margin:0 0 8px;">Ready to turn your Roblox fashion into a real brand hub?</h2>
+          <p style="margin:0; color: var(--muted);">Replace the placeholders, add your real shop links, and start sending traffic from TikTok, Discord, and Roblox.</p>
+        </div>
+        <a class="btn btn-primary" href="#top">Back to top</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      © 2026 Alexa's Creative Group — Roblox fashion showcase template.
+    </div>
+  </footer>
+</body>
+</html>
