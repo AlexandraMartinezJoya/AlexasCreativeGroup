@@ -215,21 +215,16 @@
       justify-content: center;
       padding: 24px;
     }
-
-    .avatar-placeholder {
-      width: min(280px, 100%);
+    .hero-image {
+      width: min(320px, 100%);
       aspect-ratio: 3 / 4;
+      object-fit: cover;
       border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
       border: 1px solid rgba(255,255,255,0.16);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--muted);
-      padding: 18px;
-      font-weight: 600;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+      display: block;
     }
+
 
     .floating-tag {
       position: absolute;
@@ -493,33 +488,37 @@
 </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">✦ Roblox fashion • outfit drops • commissions</div>
-          <h1>Coquette, dreamy, and original Roblox fashion.</h1>
-          <p>
-            Build your brand hub with a clean fashion-style layout for outfit showcases, UGC-inspired looks,
-            commissions, TikTok traffic, and group links. Replace the placeholders with your own avatars,
-            thumbnails, shop links, and social buttons.
-          </p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#drops">Browse latest drops</a>
-            <a class="btn btn-secondary" href="#commissions">See commissions</a>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <div class="avatar-stage">
-            <div class="floating-tag tag-1">New summer drop</div>
-            <div class="avatar-placeholder">
-              Replace this with your featured Roblox avatar image or edit showcase.
-            </div>
-            <div class="floating-tag tag-2">Pinterest → Roblox</div>
-          </div>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">✦ Roblox fashion • Pinterest to Roblox • original outfit drops</div>
+        <h1>Dreamy, stylish Roblox fashion for cute and expressive avatars.</h1>
+        <p>
+          Explore original outfit drops, Pinterest-inspired recreations, and themed fashion looks made for
+          stylish Roblox characters. From soft summer sets to dark lace collections, Alexa’s Creative Group
+          brings personality and aesthetic detail to every design.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#drops">Browse latest drops</a>
+          <a class="btn btn-secondary" href="#contact">Shop / Contact</a>
         </div>
       </div>
-    </section>
+  
+      <div class="hero-card">
+        <div class="avatar-stage">
+          <div class="floating-tag tag-1">Featured look</div>
+  
+          <img
+            class="hero-image"
+            src="image/SummerBlues.png"
+            alt="Featured Roblox summer fashion look"
+          />
+  
+          <div class="floating-tag tag-2">Summer 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
     <section id="drops">
       <div class="container">
