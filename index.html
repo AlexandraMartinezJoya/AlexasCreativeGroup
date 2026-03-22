@@ -603,21 +603,36 @@
 }
   </style>
 
-  <script>
-  const galleryImages = [
-    "image/NewDrops1.png",
-    "image/NewDrops2.png",
-    "image/NewDrops3.png",
-    "image/NewDrops4.png",
-    "image/NewDrops5.png",
-  ];
+<script>
+  const galleries = {
+    newDrops: [
+      "image/NewDrops1.png",
+      "image/NewDrops2.png",
+      "image/NewDrops3.png",
+      "image/NewDrops4.png",
+      "image/NewDrops5.png"
+    ],
+    pinterest: [
+      "image/PintrestToRoblox2.png",
+      "image/PinterestBlack1.png",
+      "image/PinterestBlack2.png"
+    ],
+    darkLace: [
+      "image/DarkLace.png",
+      "image/DarkLace2.png",
+      "image/DarkLace3.png"
+    ]
+  };
 
+  let currentGallery = galleries.newDrops;
   let currentSlide = 0;
 
-  function openGallery(index = 0) {
+  function openGallery(galleryName = "newDrops", index = 0) {
+    currentGallery = galleries[galleryName] || galleries.newDrops;
     currentSlide = index;
+
     document.getElementById("galleryModal").style.display = "flex";
-    document.getElementById("galleryImage").src = galleryImages[currentSlide];
+    document.getElementById("galleryImage").src = currentGallery[currentSlide];
   }
 
   function closeGallery() {
@@ -628,14 +643,14 @@
     currentSlide += direction;
 
     if (currentSlide < 0) {
-      currentSlide = galleryImages.length - 1;
+      currentSlide = currentGallery.length - 1;
     }
 
-    if (currentSlide >= galleryImages.length) {
+    if (currentSlide >= currentGallery.length) {
       currentSlide = 0;
     }
 
-    document.getElementById("galleryImage").src = galleryImages[currentSlide];
+    document.getElementById("galleryImage").src = currentGallery[currentSlide];
   }
 
   window.addEventListener("click", function (e) {
@@ -727,7 +742,7 @@
               <p>Soft pastel look with a dreamy, feminine vibe made for beach edits and cute avatar videos.</p>
               <div class="price-row">
                 <span class="price">From 800 R$</span>
-                <a class="btn btn-primary" href="#drops-gallery">New Drops</a>
+                <button class="btn btn-primary" onclick="openGallery('newDrops', 0)">New Drops</button>
               </div>
             </div>
           </article>
@@ -742,7 +757,7 @@
               <p>Show how you turned inspo into a Roblox-ready outfit. Great for Shorts, TikTok, and commissions.</p>
               <div class="price-row">
                 <span class="price">Featured</span>
-                <a class="btn btn-secondary" href="#">See reveal</a>
+                <button class="btn btn-secondary" onclick="openGallery('pinterest', 0)">See reveal</button>
               </div>
             </div>
           </article>
@@ -757,7 +772,7 @@
               <p>Perfect for gothic, dramatic, and layered looks with lace details, ribbons, and statement pieces.</p>
               <div class="price-row">
                 <span class="price">From 800 R$</span>
-                <a class="btn btn-secondary" href="#">Open collection</a>
+                <button class="btn btn-secondary" onclick="openGallery('darkLace', 0)">Open collection</button>
               </div>
             </div>
           </article>
@@ -774,24 +789,24 @@
           </div>
           <button class="btn btn-primary" onclick="openGallery()">View All</button>
         </div>
-    
+          
         <div class="gallery-grid">
-          <div class="gallery-card" onclick="openGallery(0)">
-            <img src="image/NewDrops1.png" alt="Summer Blues collection image">
-          </div>
-    
-          <div class="gallery-card" onclick="openGallery(1)">
-            <img src="image/NewDrops2.png" alt="Pinterest to Roblox collection image">
-          </div>
-    
-          <div class="gallery-card" onclick="openGallery(2)">
-            <img src="image/NewDrops3.png" alt="Dark Lace collection image">
-          </div>
-    
-          <div class="gallery-card" onclick="openGallery(3)">
-            <img src="image/NewDrops4.png" alt="Salmon Summer collection image">
-          </div>
+        <div class="gallery-card" onclick="openGallery('newDrops', 0)">
+          <img src="image/NewDrops1.png" alt="Summer Blues collection image">
         </div>
+      
+        <div class="gallery-card" onclick="openGallery('newDrops', 1)">
+          <img src="image/NewDrops2.png" alt="Pinterest to Roblox collection image">
+        </div>
+      
+        <div class="gallery-card" onclick="openGallery('newDrops', 2)">
+          <img src="image/NewDrops3.png" alt="Dark Lace collection image">
+        </div>
+      
+        <div class="gallery-card" onclick="openGallery('newDrops', 3)">
+          <img src="image/NewDrops4.png" alt="Salmon Summer collection image">
+        </div>
+      </div>
       </div>
     </section>
 
